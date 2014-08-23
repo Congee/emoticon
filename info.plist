@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>bundleid</key>
+	<string>me.congee.emoticon</string>
+	<key>connections</key>
+	<dict>
+		<key>BC90F54A-8E97-41C1-B1F6-C921C1FE8875</key>
+		<array>
+			<dict>
+				<key>destinationuid</key>
+				<string>BAF4A300-A2D9-4C81-A128-F5AA326813AF</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+			<dict>
+				<key>destinationuid</key>
+				<string>E558CA3E-1C2F-45C8-81A1-FB4A7A829630</string>
+				<key>modifiers</key>
+				<integer>0</integer>
+				<key>modifiersubtext</key>
+				<string></string>
+			</dict>
+		</array>
+	</dict>
+	<key>createdby</key>
+	<string>Charles Wu</string>
+	<key>description</key>
+	<string>快捷复制颜文字</string>
+	<key>disabled</key>
+	<false/>
+	<key>name</key>
+	<string>o</string>
+	<key>objects</key>
+	<array>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>autopaste</key>
+				<false/>
+				<key>clipboardtext</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.clipboard</string>
+			<key>uid</key>
+			<string>BAF4A300-A2D9-4C81-A128-F5AA326813AF</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>argumenttype</key>
+				<integer>1</integer>
+				<key>escaping</key>
+				<integer>127</integer>
+				<key>keyword</key>
+				<string>o</string>
+				<key>runningsubtext</key>
+				<string>Updating emoticon data</string>
+				<key>script</key>
+				<string>#!/usr/bin/env bash
+
+/usr/local/bin/python3 o3o.py "{query}"</string>
+				<key>title</key>
+				<string>o3o</string>
+				<key>type</key>
+				<integer>0</integer>
+				<key>withspace</key>
+				<true/>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.input.scriptfilter</string>
+			<key>uid</key>
+			<string>BC90F54A-8E97-41C1-B1F6-C921C1FE8875</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+		<dict>
+			<key>config</key>
+			<dict>
+				<key>lastpathcomponent</key>
+				<false/>
+				<key>onlyshowifquerypopulated</key>
+				<false/>
+				<key>output</key>
+				<integer>0</integer>
+				<key>removeextension</key>
+				<false/>
+				<key>sticky</key>
+				<false/>
+				<key>text</key>
+				<string>所选颜文字已经拷贝到剪贴板</string>
+				<key>title</key>
+				<string>{query}</string>
+			</dict>
+			<key>type</key>
+			<string>alfred.workflow.output.notification</string>
+			<key>uid</key>
+			<string>E558CA3E-1C2F-45C8-81A1-FB4A7A829630</string>
+			<key>version</key>
+			<integer>0</integer>
+		</dict>
+	</array>
+	<key>readme</key>
+	<string>Credit:
+
+* The emotion library file "yan.json" and inspiration of this workflow are provided by: https://github.com/turingou/o3o
+
+* The "yan.json" file will be automatically updated every 5 days if Internet connection is available.
+
+* Powered by David Ferguson's Workflows class: http://dferg.us/workflows-class/
+
+
+感谢：
+
+* 灵感及颜文字库文件 yan.json 来源于：https://github.com/turingou/o3o
+
+* 本插件每 5 天会自动获取一次 yan.json
+
+* David Ferguson 的 Workflows class: http://dferg.us/workflows-class/</string>
+	<key>uidata</key>
+	<dict>
+		<key>BAF4A300-A2D9-4C81-A128-F5AA326813AF</key>
+		<dict>
+			<key>ypos</key>
+			<real>20</real>
+		</dict>
+		<key>BC90F54A-8E97-41C1-B1F6-C921C1FE8875</key>
+		<dict>
+			<key>ypos</key>
+			<real>150</real>
+		</dict>
+		<key>E558CA3E-1C2F-45C8-81A1-FB4A7A829630</key>
+		<dict>
+			<key>ypos</key>
+			<real>260</real>
+		</dict>
+	</dict>
+	<key>webaddress</key>
+	<string>http://congee.me</string>
+</dict>
+</plist>
