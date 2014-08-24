@@ -74,7 +74,7 @@
 				<string>#cat -e '{query}' &amp;&gt;/tmp/alfred
 
 if [[ -x /usr/local/bin/python3 ]]; then
-	/usr/local/bin/python3 emoticon.py '{query}' 2&gt;/tmp/alfred
+	/usr/local/bin/python3 emoticon.py '{query}'
 else
 	python emoticon.py '{query}' 2&gt;/tmp/alfred
 fi</string>
@@ -132,7 +132,7 @@ if [[ -x /usr/local/bin/python3 ]]; then
 	/usr/local/bin/python3 history.py '{query}'
 else
 	python history.py "{query}"
-fi 2&gt;/tmp/alfred</string>
+fi</string>
 				<key>type</key>
 				<integer>0</integer>
 			</dict>
