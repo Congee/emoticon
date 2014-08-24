@@ -42,13 +42,13 @@ def parse(query):
         conn = sqlite3.connect('history.sqlite3')
         c = conn.cursor()
         try:
-            c.execute("SELECT emoticons from most_common;")
+            c.execute("SELECT emoticons FROM most_common ORDER BY hits DESC;")
         except sqlite3.OperationalError:
             pass
         conn.commit()
 
         yans = c.fetchall()
-        if yans == []: yans = [['｡◕‿◕｡']]
+        if yans == []: yans = [['｡◕‿◕｡']] # for fear that yans is an empty list
         yans = [item for tup in yans for item in tup]
 
         conn.close()
@@ -79,19 +79,22 @@ def to_xml(query):
     '''
     yans = parse(query)
     root = etree.Element("items")
-    for yan in yans:
-        item = etree.Element("item", attrib={"arg": yan})
-        title = etree.Element("title")
-        title.text = query
+    try:
+        for yan in yans:
+            item = etree.Element("item", attrib={"arg": yan, "uid": ""})
+            title = etree.Element("title")
+            title.text = query
 
-        subtitle = etree.Element("subtitle")
-        subtitle.text = yan
+            subtitle = etree.Element("subtitle")
+            subtitle.text = yan
 
-        icon = etree.Element("icon")
-        icon.text = 'icon.png'
+            icon = etree.Element("icon")
+            icon.text = 'icon.png'
 
-        item.extend([title, subtitle, icon])
-        root.append(item)
+            item.extend([title, subtitle, icon])
+            root.append(item)
+    except TypeError:
+        pass
 
     print(etree.tostring(root, xml_declaration=True, pretty_print=True).decode())
 
