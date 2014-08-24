@@ -41,10 +41,16 @@ def parse(query):
     if query == '':
         conn = sqlite3.connect('history.sqlite3')
         c = conn.cursor()
-        c.execute("SELECT emoticons from most_common")
+        try:
+            c.execute("SELECT emoticons from most_common;")
+        except sqlite3.OperationalError:
+            pass
         conn.commit()
+
         yans = c.fetchall()
+        if yans == []: yans = [['｡◕‿◕｡']]
         yans = [item for tup in yans for item in tup]
+
         conn.close()
         return yans
     else:
@@ -90,45 +96,7 @@ def to_xml(query):
     print(etree.tostring(root, xml_declaration=True, pretty_print=True).decode())
 
 
-def history():
-    query = sys.argv[1]
-    conn = sqlite3.connect('history.sqlite3')
-    c = conn.cursor()
-    # max(len([emoticons])) = 33
-    c.execute('''CREATE TABLE if NOT exists usage
-            (emoticons char(50) PRIMARY KEY, hits INT(2048) DEFAULT 1)''')
-    c.execute("CREATE TABLE if NOT exists most_common (emoticons char(50))")
-    c.execute('''
-    INSERT or REPLACE into usage (emoticons, hits) VALUES
-    ("{0}",
-    COALESCE(
-        ((SELECT hits FROM usage WHERE emoticons="{0}") + 1),
-        1)
-    )'''.format(query))
-
-    # invokes the file "time" to calculate update intervals
-    last_updata_time = pickle.load(open("time_update_most_common.txt", "rb"))
-    time_now = time.time()
-    if time_now - last_updata_time >= 1209600:  # updating most_common once every other week
-        pickle.dump(time.time(), open("time_update_most_common.txt", "wb"))
-
-        conn = sqlite3.connect('history.sqlite3')
-        c = conn.cursor()
-        c.execute("DROP TABLE most_common")
-        c.execute('''CREATE TABLE most_common
-                (emoticons char(50) PRIMARY KEY, hits INT(2048) DEFAULT 1)''')
-        c.execute('''INSERT INTO most_common
-                SELECT emoticons,hits from usage
-                ORDER BY hits DESC
-                LIMIT 10''')
-        c.execute("DROP TABLE usage")
-
-    conn.commit()
-    conn.close()
-
-
 if __name__ == '__main__':
     update_file()
-    history()
     query = ''.join([i for i in sys.argv[1] if i.isalpha()]) # strip
     to_xml(query)
